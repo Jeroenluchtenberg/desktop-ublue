@@ -7,6 +7,9 @@ COPY build_files /
 # Base Image
 FROM ${BASE_IMAGE}
 
+# Re-declare so it's available in this build stage
+ARG BASE_IMAGE
+
 ### [IM]MUTABLE /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
 ## make it mutable/writable for users. However, some packages write files to this directory,
@@ -26,7 +29,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build.sh
+    /ctx/build.sh ${BASE_IMAGE}
     
 ### LINTING
 ## Verify final image and contents are correct.

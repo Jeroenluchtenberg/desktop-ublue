@@ -12,12 +12,6 @@ set -ouex pipefail
 # Setup base
 dnf5 install -y openssh-server
 
-
-# Install Docker
-dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
-dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-systemctl enable docker.socket
-
 # Setup virtualization
 dnf5 install -y @virtualization
 
@@ -41,8 +35,6 @@ dnf5 install -y \
   butane \
   nc \
   strace \
-  vagrant \
-  vagrant-libvirt \
   direnv
 
 # Use a COPR Example:
@@ -53,12 +45,9 @@ dnf5 install -y \
 # dnf5 -y copr disable ublue-os/staging
 #
 
-#### Install Flatpacks ####
-cat <<EOF >> /usr/share/ublue-os/bazzite/flatpak/install
-com.brave.Browser
-md.obsidian.Obsidian
-com.spotify.Client
-EOF
+if [[ $1 = *"bazzite"* ]]; then
+	source /ctx/bazzite.sh
+fi
 
 #### Example for enabling a System Unit File
 
