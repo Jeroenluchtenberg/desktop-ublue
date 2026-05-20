@@ -13,7 +13,7 @@ set -ouex pipefail
 dnf5 install -y openssh-server
 
 # Setup virtualization
-dnf5 install -y @virtualization
+dnf5 install -y @virtualization guestfs-tools
 
 # Add vscode repo
 tee /etc/yum.repos.d/vscode.repo <<'EOF'
