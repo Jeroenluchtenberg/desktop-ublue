@@ -15,6 +15,10 @@ dnf5 install -y openssh-server
 # Setup virtualization
 dnf5 install -y @virtualization guestfs-tools
 
+# Install Docker
+dnf5 config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
+dnf5 install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 # Add vscode repo
 tee /etc/yum.repos.d/vscode.repo <<'EOF'
 [code]
@@ -52,3 +56,4 @@ fi
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+systemctl enable docker
